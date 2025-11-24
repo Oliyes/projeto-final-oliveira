@@ -18,7 +18,15 @@ export default function TabLayout() {
         options={{
           title: 'Overwatch',
           headerShown: false,
-          tabBarIcon: ({ color }) => <FontAwesome size={28} name="cog" color={color} />,
+          tabBarIcon: ({ color }) => <FontAwesome size={28} name="gamepad" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="historia"
+        options={{
+          title: 'Obrigatório',
+          headerShown: false,
+          tabBarIcon: ({ color }) => <FontAwesome size={28} name="book" color={color} />,
         }}
       />
       <Tabs.Screen
@@ -26,7 +34,7 @@ export default function TabLayout() {
         options={{
           title: 'Sobre',
           headerShown: false,
-          tabBarIcon: ({ color }) => <FontAwesome size={28} name="cog" color={color} />,
+          tabBarIcon: ({ color }) => <FontAwesome size={28} name="user" color={color} />,
         }}
       />
     </Tabs>
