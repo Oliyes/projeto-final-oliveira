@@ -11,43 +11,41 @@ export default function Page() {
   return (
     <ScrollView style={styles.container}>
 
-      {/* IMAGEM DE CAPA */}
+
       <Image 
         source={{ uri: "https://blz-contentstack-images.akamaized.net/v3/assets/blt2477dcaf4ebd440c/bltdabc3782553659f1/6785b50a1970a9f14eb5ccd7/xboxshowcase.png" }} 
         style={styles.headerImage}
       />
 
-      {/* TÍTULO */}
+
       <View style={styles.header}>
-        <Text style={styles.title}>Bem vindo 👋</Text>
-        <Text style={styles.subtitle}>Explore o aplicativo</Text>
+        <Text style={styles.title}>Oii esse é o meu app</Text>
+        <Text style={styles.subtitle}>Essa é a introdução</Text>
+
       </View>
 
-      {/* CARROSSEL DE IMAGENS (simples) */}
       <ScrollView 
         horizontal 
         showsHorizontalScrollIndicator={false}
         style={styles.carousel}
       >
-        <Image style={styles.carouselImg} source={{ uri: "https://picsum.photos/300/200?1" }} />
-        <Image style={styles.carouselImg} source={{ uri: "https://picsum.photos/300/200?2" }} />
-        <Image style={styles.carouselImg} source={{ uri: "https://picsum.photos/300/200?3" }} />
+        <Image style={styles.carouselImg} source={{ uri: "https://select.art.br/wp-content/uploads/2021/03/1.jpg" }} />
+        <Image style={styles.carouselImg} source={{ uri: "https://pt.egw.news/_next/image?url=https%3A%2F%2Fegw.news%2Fuploads%2Fnews%2F1%2F17%2F1751052661752_1751052661753.webp&w=1920&q=75" }} />
+        <Image style={styles.carouselImg} source={{ uri: "https://sm.ign.com/ign_br/screenshot/default/ow2-blizzcon-2019-screenshot-rio-lucio-1p-gameplay-01-png-jp_vbex.jpg" }} />
       </ScrollView>
 
     
 
-      {/* CARD DE INFORMAÇÃO */}
       <View style={styles.infoCard}>
-        <Text style={styles.infoTitle}>Informações</Text>
+        <Text style={styles.infoTitle}>Sobre o app</Text>
         <Text style={styles.infoText}>
-          Aqui você pode personalizar a tela inicial com imagens, componentes e 
-          botões. Essa é uma base bonita e moderna para evoluir seu app.  
+          Esse app, tem o objetivo de falar sobre o jogo Overwatch 2 e contar a vocês sobre a história dos jogos online,
+           como surgiu e outras coisas...Espero que gostem  
         </Text>
       </View>
 
      
 
-      {/* ESPAÇAMENTO FINAL */}
       <View style={{ height: 40 }} />
 
     </ScrollView>
@@ -56,7 +54,7 @@ export default function Page() {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#eef4ff",
+    backgroundColor: "#4d2847",
     flex: 1,
   },
 
@@ -65,6 +63,12 @@ const styles = StyleSheet.create({
     height: 230,
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
+   
+    shadowColor: "#ffe3fc",
+    shadowOpacity: 0.15,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 10,
+    elevation: 5, 
   },
 
   header: {
@@ -75,13 +79,13 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 34,
     fontWeight: "bold",
-    color: "#0a284b",
+    color: "#ffb0f8",
   },
 
   subtitle: {
     marginTop: 5,
     fontSize: 18,
-    color: "#3b5673",
+    color: "#ffc9f4",
   },
 
   carousel: {
@@ -94,6 +98,12 @@ const styles = StyleSheet.create({
     height: 140,
     borderRadius: 16,
     marginRight: 12,
+   
+    shadowColor: "#ffe3fc",
+    shadowOpacity: 0.2,
+    shadowOffset: { width: 0, height: 5 },
+    shadowRadius: 30,
+    elevation: 10, 
   },
 
   shortcuts: {
@@ -112,8 +122,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     elevation: 3,
     shadowColor: "#000",
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
+    shadowOpacity: 0.50,
+    shadowRadius: 5,
   },
 
   shortcutEmoji: {
@@ -127,39 +137,31 @@ const styles = StyleSheet.create({
   },
 
   infoCard: {
-    backgroundColor: "#fff",
+    backgroundColor: "#ffe6f9",
     marginHorizontal: 20,
     marginTop: 30,
     padding: 20,
     borderRadius: 16,
     elevation: 3,
+    
+    shadowColor: "#ffe3fc",
+    shadowOpacity: 0.30,
+    shadowOffset: { width: 0, height: 4 },
+    shadowRadius: 8,
   },
 
   infoTitle: {
     fontSize: 22,
     fontWeight: "bold",
-    color: "#123456",
+    color: "#cf8cc7",
   },
 
   infoText: {
     fontSize: 16,
     marginTop: 10,
-    color: "#444",
+    color: "#cf8cc7",
     lineHeight: 22,
   },
 
-  mainButton: {
-    backgroundColor: "#0057ff",
-    marginHorizontal: 20,
-    marginTop: 30,
-    paddingVertical: 16,
-    borderRadius: 12,
-    alignItems: "center",
-  },
 
-  mainButtonText: {
-    color: "#fff",
-    fontSize: 18,
-    fontWeight: "bold",
-  },
 });
