@@ -6,6 +6,8 @@ import {
   TouchableOpacity, 
   ScrollView 
 } from "react-native";
+import {  } from '@expo-google-fonts/goblin-one';
+import {  } from '@expo-google-fonts/mali';
 
 export default function Page() {
   return (

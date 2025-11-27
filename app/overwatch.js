@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View, Image, ScrollView } from "react-native";
-
+import {  } from '@expo-google-fonts/goblin-one';
+import {  } from '@expo-google-fonts/mali';
 export default function Page() {
   return (
     <ScrollView style={styles.container}>
@@ -10,21 +11,26 @@ export default function Page() {
         </Text>
       </View>
 
-     {/*sobre o jogo*/}
+      {/*sobre o jogo*/}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Sobre o Jogo</Text>
 
         <View style={styles.singleCardWrapper}>
           <View style={styles.singleCard}>
             <Image
-              source={{ uri: "https://static.wikia.nocookie.net/overwatch/images/b/b7/OW2_Logo_Dark.webp/revision/latest?cb=20221203012359&path-prefix=pt-br" }}
+              source={{
+                uri: "https://static.wikia.nocookie.net/overwatch/images/b/b7/OW2_Logo_Dark.webp/revision/latest?cb=20221203012359&path-prefix=pt-br",
+              }}
               style={styles.cardImage}
             />
             <Text style={styles.cardTitle}>Sobre o Overwatch 2</Text>
             <Text style={styles.cardText}>
-Overwatch 2 é um jogo online de ação em equipe grátis para jogar que se
- passa em um futuro otimista, no qual cada partida é um campo de batalha 5v5 definitivo. Jogue como uma lutadora da liberdade viajante do tempo, um DJ do campo batalha ou outro
- dos mais de 30 heróis únicos em suas lutas ao redor do mundo.            </Text>
+              Overwatch 2 é um jogo online de ação em equipe grátis para jogar
+              que se passa em um futuro otimista, no qual cada partida é um
+              campo de batalha 5v5 definitivo. Jogue como uma lutadora da
+              liberdade viajante do tempo, um DJ do campo batalha ou outro dos
+              mais de 30 heróis únicos em suas lutas ao redor do mundo.{" "}
+            </Text>
           </View>
         </View>
       </View>
@@ -36,31 +42,61 @@ Overwatch 2 é um jogo online de ação em equipe grátis para jogar que se
         <View style={styles.cardGrid}>
           <View style={styles.card}>
             <Image
-              source={{ uri: "https://blz-contentstack-images.akamaized.net/v3/assets/blt2477dcaf4ebd440c/bltf8e9415141b0ec36/631a8b65e7bdcf0dd996c8e1/1600_Dva.jpg" }}
+              source={{
+                uri: "https://blz-contentstack-images.akamaized.net/v3/assets/blt2477dcaf4ebd440c/bltf8e9415141b0ec36/631a8b65e7bdcf0dd996c8e1/1600_Dva.jpg",
+              }}
               style={styles.cardImage}
             />
-            <Text style={styles.cardTitle}>Herói 1</Text>
+            <Text style={styles.cardTitle}>D.VA</Text>
             <Text style={styles.cardText}>
-              Descrição do personagem, habilidades e estilo de jogo.
+              - D.Va é uma ex-gamer profissional que sabe como usar suas
+              habilidades para pilotar um mecha de última geração na defesa de
+              sua cidade natal.
+            </Text>
+            <Text style={styles.cardText}>- Tanque</Text>
+            <Text style={styles.cardText}>
+              - Base MEKA, Busan, Coreia do Sul (anteriormente), Observatório:
+              Gibraltar
+            </Text>
+             <Text style={styles.cardText}>
+              - 22 de jun. 
+            </Text>
+            <Text style={styles.cardText}>
+              (Idade: 21)
             </Text>
           </View>
 
           <View style={styles.card}>
             <Image
-              source={{ uri: "https://via.placeholder.com/160x160" }}
+              source={{
+                uri: "https://blz-contentstack-images.akamaized.net/v3/assets/blt2477dcaf4ebd440c/blt63636a99fbb886d0/66a3ccde518bb27c65883c5c/Juno_Red_Promise.jpg",
+              }}
               style={styles.cardImage}
             />
-            <Text style={styles.cardTitle}>Herói 2</Text>
+            <Text style={styles.cardTitle}>Juno</Text>
             <Text style={styles.cardText}>
-              Outra descrição sobre o personagem escolhido.
+              - A primeira humana nascida em Marte, Juno usa sua tecnologia da era espacial para resolver qualquer problema que entre na sua órbita.
+              Ela está determinada a um dia salvar seu planeta natal.
+            </Text>
+            <Text style={styles.cardText}>- Suporte</Text>
+            <Text style={styles.cardText}>
+              - Colônia Promessa Vermelha, Marte (antiga), Observatório: Gibraltar
+            </Text>
+             <Text style={styles.cardText}>
+              - 22 de mar. 
+            </Text>
+            <Text style={styles.cardText}>
+              (Idade: 19)
             </Text>
           </View>
           <View style={styles.card}>
             <Image
-              source={{ uri: "https://via.placeholder.com/160x160" }}
+              source={{
+                uri: "https://cdna.artstation.com/p/assets/images/images/058/352/352/large/tim-moreels-cassidy-ingame-07.jpg?1673970173",
+              }}
               style={styles.cardImage}
             />
-            <Text style={styles.cardTitle}>Herói 2</Text>
+            <Text style={styles.cardTitle}>Cassidy</Text>
             <Text style={styles.cardText}>
               Outra descrição sobre o personagem escolhido.
             </Text>
@@ -68,7 +104,7 @@ Overwatch 2 é um jogo online de ação em equipe grátis para jogar que se
         </View>
       </View>
 
-{/*função*/}
+      {/*função*/}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Funções</Text>
 
@@ -96,18 +132,17 @@ Overwatch 2 é um jogo online de ação em equipe grátis para jogar que se
           </View>
         </View>
 
-          <View style={styles.card}>
-            <Image
-              source={{ uri: "https://via.placeholder.com/160x160" }}
-              style={styles.cardImage}
-            />
-            <Text style={styles.cardTitle}>Herói 2</Text>
-            <Text style={styles.cardText}>
-              Outra descrição sobre o personagem escolhido.
-            </Text>
-          </View>
+        <View style={styles.card}>
+          <Image
+            source={{ uri: "https://via.placeholder.com/160x160" }}
+            style={styles.cardImage}
+          />
+          <Text style={styles.cardTitle}>Herói 2</Text>
+          <Text style={styles.cardText}>
+            Outra descrição sobre o personagem escolhido.
+          </Text>
         </View>
-      
+      </View>
 
       {/*gameplay*/}
       <View style={styles.section}>
@@ -131,9 +166,7 @@ Overwatch 2 é um jogo online de ação em equipe grátis para jogar que se
               style={styles.cardImage}
             />
             <Text style={styles.cardTitle}>Estratégias</Text>
-            <Text style={styles.cardText}>
-              Dicas e formas de jogar melhor.
-            </Text>
+            <Text style={styles.cardText}>Dicas e formas de jogar melhor.</Text>
           </View>
         </View>
       </View>
@@ -166,7 +199,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
 
-  
   section: {
     padding: 24,
     backgroundColor: "#ffe6f9",
@@ -184,10 +216,9 @@ const styles = StyleSheet.create({
     fontFamily: "Bungee",
     color: "#cf8cc7",
     marginBottom: 16,
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
 
-  
   singleCardWrapper: {
     alignItems: "center",
   },
@@ -203,7 +234,6 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
 
-  
   cardGrid: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -234,7 +264,7 @@ const styles = StyleSheet.create({
     fontFamily: "Bungee",
     marginTop: 10,
     color: "#cf8cc7",
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
   cardText: {
     fontSize: 16,

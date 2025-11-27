@@ -9,8 +9,11 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@expo-google-fonts/goblin-one": "^0.4.1",
+    "@expo-google-fonts/mali": "^0.4.1",
     "expo": "~54.0.23",
     "expo-constants": "~18.0.10",
+    "expo-font": "~14.0.9",
     "expo-linking": "~8.0.8",
     "expo-router": "~6.0.14",
     "expo-status-bar": "~3.0.8",
