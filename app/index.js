@@ -1,169 +1,183 @@
+import { useRef, useEffect } from "react";
 import { 
   StyleSheet, 
   Text, 
   View, 
   Image, 
+  ScrollView, 
+  Animated, 
   TouchableOpacity, 
-  ScrollView 
+  Dimensions 
 } from "react-native";
-import {  } from '@expo-google-fonts/goblin-one';
-import {  } from '@expo-google-fonts/mali';
+import { LinearGradient } from "expo-linear-gradient";
+
+const { width } = Dimensions.get("window");
 
 export default function Page() {
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+  const slideAnim = useRef(new Animated.Value(30)).current;
+  const gradientAnim = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.parallel([
+      Animated.timing(fadeAnim, {
+        toValue: 1,
+        duration: 1000,
+        useNativeDriver: true,
+      }),
+      Animated.timing(slideAnim, {
+        toValue: 0,
+        duration: 1000,
+        useNativeDriver: true,
+      }),
+      Animated.loop(
+        Animated.sequence([
+          Animated.timing(gradientAnim, { toValue: 1, duration: 4000, useNativeDriver: false }),
+          Animated.timing(gradientAnim, { toValue: 0, duration: 4000, useNativeDriver: false }),
+        ])
+      ),
+    ]).start();
+  }, []);
+
+  const bgInterpolation = gradientAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['#2c0f34', '#5d0f70']
+  });
+
   return (
-    <ScrollView style={styles.container}>
+    <Animated.View style={[styles.container, { backgroundColor: bgInterpolation }]}>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        
+        {/* HEADER */}
+        <View style={styles.headerWrapper}>
+          <Image 
+            source={{ uri: "https://blz-contentstack-images.akamaized.net/v3/assets/blt2477dcaf4ebd440c/bltdabc3782553659f1/6785b50a1970a9f14eb5ccd7/xboxshowcase.png" }} 
+            style={styles.headerImage}
+          />
+          <Animated.View style={[styles.headerTextContainer, { opacity: fadeAnim, transform: [{ translateY: slideAnim }] }]}>
+            <Text style={styles.title}>OVERWATCH 2</Text>
+            <Text style={styles.subtitle}>Explore, jogue e descubra os heróis!</Text>
+          </Animated.View>
+        </View>
 
+        {/* CARROSSEL COM PARALLAX */}
+        <ScrollView 
+          horizontal 
+          showsHorizontalScrollIndicator={false}
+          style={styles.carousel}
+          contentContainerStyle={{ paddingHorizontal: 10 }}
+        >
+          {[
+            "https://select.art.br/wp-content/uploads/2021/03/1.jpg",
+            "https://pt.egw.news/_next/image?url=https%3A%2F%2Fegw.news%2Fuploads%2Fnews%2F1%2F17%2F1751052661752_1751052661753.webp&w=1920&q=75",
+            "https://sm.ign.com/ign_br/screenshot/default/ow2-blizzcon-2019-screenshot-rio-lucio-1p-gameplay-01-png-jp_vbex.jpg"
+          ].map((uri, i) => (
+            <TouchableOpacity key={i} activeOpacity={0.9}>
+              <Animated.Image 
+                source={{ uri }}
+                style={[styles.carouselImg, { transform: [{ scale: fadeAnim.interpolate({ inputRange: [0, 1], outputRange: [0.95, 1] }) }] }]} 
+              />
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
 
-      <Image 
-        source={{ uri: "https://blz-contentstack-images.akamaized.net/v3/assets/blt2477dcaf4ebd440c/bltdabc3782553659f1/6785b50a1970a9f14eb5ccd7/xboxshowcase.png" }} 
-        style={styles.headerImage}
-      />
+        {/* SOBRE O APP */}
+        <Animated.View style={[styles.infoCard, { opacity: fadeAnim, transform: [{ translateY: slideAnim }] }]}>
+          <Text style={styles.infoTitle}>Sobre o App</Text>
+          <Text style={styles.infoText}>
+            Esse app tem o objetivo de falar sobre o jogo Overwatch 2 e contar a vocês sobre a 
+            história dos jogos online, como surgiu e outras coisas... Esperamos que gostem!
+          </Text>
+        </Animated.View>
 
-
-      <View style={styles.header}>
-        <Text style={styles.title}>Oii esse é o meu app</Text>
-        <Text style={styles.subtitle}>Essa é a introdução</Text>
-
-      </View>
-
-      <ScrollView 
-        horizontal 
-        showsHorizontalScrollIndicator={false}
-        style={styles.carousel}
-      >
-        <Image style={styles.carouselImg} source={{ uri: "https://select.art.br/wp-content/uploads/2021/03/1.jpg" }} />
-        <Image style={styles.carouselImg} source={{ uri: "https://pt.egw.news/_next/image?url=https%3A%2F%2Fegw.news%2Fuploads%2Fnews%2F1%2F17%2F1751052661752_1751052661753.webp&w=1920&q=75" }} />
-        <Image style={styles.carouselImg} source={{ uri: "https://sm.ign.com/ign_br/screenshot/default/ow2-blizzcon-2019-screenshot-rio-lucio-1p-gameplay-01-png-jp_vbex.jpg" }} />
+        <View style={{ height: 40 }} />
       </ScrollView>
-
-    
-
-      <View style={styles.infoCard}>
-        <Text style={styles.infoTitle}>Sobre o app</Text>
-        <Text style={styles.infoText}>
-          Esse app, tem o objetivo de falar sobre o jogo Overwatch 2 e contar a vocês sobre a história dos jogos online,
-           como surgiu e outras coisas...Espero que gostem  
-        </Text>
-      </View>
-
-     
-
-      <View style={{ height: 40 }} />
-
-    </ScrollView>
+    </Animated.View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#4d2847",
     flex: 1,
+  },
+
+  headerWrapper: {
+    position: "relative",
+    marginBottom: 20,
   },
 
   headerImage: {
     width: "100%",
-    height: 230,
-    borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20,
-   
-    shadowColor: "#ffe3fc",
-    shadowOpacity: 0.15,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 10,
-    elevation: 5, 
+    height: 250,
+    borderBottomLeftRadius: 30,
+    borderBottomRightRadius: 30,
   },
 
-  header: {
-    padding: 20,
-    alignItems: "center",
+  headerTextContainer: {
+    position: "absolute",
+    bottom: 20,
+    left: 20,
   },
 
   title: {
-    fontSize: 34,
-    fontWeight: "bold",
-    color: "#ffb0f8",
+    fontSize: 38,
+    color: "#ffeb3b",
+    fontWeight: "900",
+    textTransform: "uppercase",
+    textShadowColor: "#ff00c8",
+    textShadowOffset: { width: 0, height: 2 },
+    textShadowRadius: 12,
   },
 
   subtitle: {
+    fontSize: 20,
+    color: "#ffffff",
+    fontWeight: "600",
     marginTop: 5,
-    fontSize: 18,
-    color: "#ffc9f4",
+    textShadowColor: "#ff00c8",
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 8,
   },
 
   carousel: {
-    marginTop: 10,
-    paddingLeft: 10,
+    marginTop: 15,
   },
 
   carouselImg: {
-    width: 220,
-    height: 140,
-    borderRadius: 16,
-    marginRight: 12,
-   
-    shadowColor: "#ffe3fc",
-    shadowOpacity: 0.2,
+    width: width * 0.7,
+    height: 180,
+    borderRadius: 20,
+    marginRight: 16,
+    shadowColor: "#fff",
+    shadowOpacity: 0.35,
     shadowOffset: { width: 0, height: 5 },
-    shadowRadius: 30,
-    elevation: 10, 
-  },
-
-  shortcuts: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingHorizontal: 20,
-    marginTop: 25,
-  },
-
-  shortcutCard: {
-    width: 100,
-    height: 100,
-    backgroundColor: "#fff",
-    borderRadius: 16,
-    alignItems: "center",
-    justifyContent: "center",
-    elevation: 3,
-    shadowColor: "#000",
-    shadowOpacity: 0.50,
-    shadowRadius: 5,
-  },
-
-  shortcutEmoji: {
-    fontSize: 32,
-  },
-
-  shortcutText: {
-    marginTop: 8,
-    fontSize: 14,
-    color: "#333",
+    shadowRadius: 15,
+    elevation: 10,
   },
 
   infoCard: {
     backgroundColor: "#ffe6f9",
     marginHorizontal: 20,
-    marginTop: 30,
-    padding: 20,
-    borderRadius: 16,
-    elevation: 3,
-    
-    shadowColor: "#ffe3fc",
-    shadowOpacity: 0.30,
-    shadowOffset: { width: 0, height: 4 },
-    shadowRadius: 8,
+    marginTop: 20,
+    padding: 24,
+    borderRadius: 25,
+    elevation: 8,
+    shadowColor: "#ff99dd",
+    shadowOpacity: 0.4,
+    shadowOffset: { width: 0, height: 6 },
+    shadowRadius: 20,
   },
 
   infoTitle: {
-    fontSize: 22,
+    fontSize: 26,
     fontWeight: "bold",
     color: "#cf8cc7",
+    marginBottom: 12,
   },
 
   infoText: {
     fontSize: 16,
-    marginTop: 10,
-    color: "#cf8cc7",
-    lineHeight: 22,
+    lineHeight: 24,
+    color: "#6a1b9a",
   },
-
-
 });

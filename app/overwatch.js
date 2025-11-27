@@ -1,9 +1,11 @@
-import { StyleSheet, Text, View, Image, ScrollView } from "react-native";
-import {  } from '@expo-google-fonts/goblin-one';
-import {  } from '@expo-google-fonts/mali';
+import { useState } from "react";
+import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity } from "react-native";
+
 export default function Page() {
   return (
     <ScrollView style={styles.container}>
+      
+      {/* HEADER */}
       <View style={styles.header}>
         <Text style={styles.title}>Bem-vindo ao OVERWATCH 2</Text>
         <Text style={styles.subtitle}>
@@ -11,169 +13,145 @@ export default function Page() {
         </Text>
       </View>
 
-      {/*sobre o jogo*/}
+      {/* SOBRE O JOGO - AJUSTADO AO CONTAINER */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Sobre o Jogo</Text>
 
-        <View style={styles.singleCardWrapper}>
-          <View style={styles.singleCard}>
-            <Image
-              source={{
-                uri: "https://static.wikia.nocookie.net/overwatch/images/b/b7/OW2_Logo_Dark.webp/revision/latest?cb=20221203012359&path-prefix=pt-br",
-              }}
-              style={styles.cardImage}
-            />
-            <Text style={styles.cardTitle}>Sobre o Overwatch 2</Text>
-            <Text style={styles.cardText}>
-              Overwatch 2 é um jogo online de ação em equipe grátis para jogar
-              que se passa em um futuro otimista, no qual cada partida é um
-              campo de batalha 5v5 definitivo. Jogue como uma lutadora da
-              liberdade viajante do tempo, um DJ do campo batalha ou outro dos
-              mais de 30 heróis únicos em suas lutas ao redor do mundo.{" "}
-            </Text>
-          </View>
-        </View>
+        <LargeHorizontalCard
+          image="https://static.wikia.nocookie.net/overwatch/images/b/b7/OW2_Logo_Dark.webp/revision/latest?cb=20221203012359&path-prefix=pt-br"
+          title="Sobre o Overwatch 2"
+          text="Overwatch 2 é um jogo online de ação em equipe grátis que se passa em um futuro otimista, no qual cada partida é um campo de batalha 5v5."
+        />
       </View>
 
-      {/*perso*/}
+      {/* PERSONAGENS — HORIZONTAL */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Personagens</Text>
 
-        <View style={styles.cardGrid}>
-          <View style={styles.card}>
-            <Image
-              source={{
-                uri: "https://blz-contentstack-images.akamaized.net/v3/assets/blt2477dcaf4ebd440c/bltf8e9415141b0ec36/631a8b65e7bdcf0dd996c8e1/1600_Dva.jpg",
-              }}
-              style={styles.cardImage}
-            />
-            <Text style={styles.cardTitle}>D.VA</Text>
-            <Text style={styles.cardText}>
-              - D.Va é uma ex-gamer profissional que sabe como usar suas
-              habilidades para pilotar um mecha de última geração na defesa de
-              sua cidade natal.
-            </Text>
-            <Text style={styles.cardText}>- Tanque</Text>
-            <Text style={styles.cardText}>
-              - Base MEKA, Busan, Coreia do Sul (anteriormente), Observatório:
-              Gibraltar
-            </Text>
-             <Text style={styles.cardText}>
-              - 22 de jun. 
-            </Text>
-            <Text style={styles.cardText}>
-              (Idade: 21)
-            </Text>
-          </View>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          <LargeHorizontalCard
+            image="https://blz-contentstack-images.akamaized.net/v3/assets/blt2477dcaf4ebd440c/bltf8e9415141b0ec36/631a8b65e7bdcf0dd996c8e1/1600_Dva.jpg"
+            title="D.VA"
+            text={`- Ex-gamer profissional.\n- Função: Tanque\n- Local: Busan\n- Idade: 21`}
+            carousel
+          />
 
-          <View style={styles.card}>
-            <Image
-              source={{
-                uri: "https://blz-contentstack-images.akamaized.net/v3/assets/blt2477dcaf4ebd440c/blt63636a99fbb886d0/66a3ccde518bb27c65883c5c/Juno_Red_Promise.jpg",
-              }}
-              style={styles.cardImage}
-            />
-            <Text style={styles.cardTitle}>Juno</Text>
-            <Text style={styles.cardText}>
-              - A primeira humana nascida em Marte, Juno usa sua tecnologia da era espacial para resolver qualquer problema que entre na sua órbita.
-              Ela está determinada a um dia salvar seu planeta natal.
-            </Text>
-            <Text style={styles.cardText}>- Suporte</Text>
-            <Text style={styles.cardText}>
-              - Colônia Promessa Vermelha, Marte (antiga), Observatório: Gibraltar
-            </Text>
-             <Text style={styles.cardText}>
-              - 22 de mar. 
-            </Text>
-            <Text style={styles.cardText}>
-              (Idade: 19)
-            </Text>
-          </View>
-          <View style={styles.card}>
-            <Image
-              source={{
-                uri: "https://cdna.artstation.com/p/assets/images/images/058/352/352/large/tim-moreels-cassidy-ingame-07.jpg?1673970173",
-              }}
-              style={styles.cardImage}
-            />
-            <Text style={styles.cardTitle}>Cassidy</Text>
-            <Text style={styles.cardText}>
-              Outra descrição sobre o personagem escolhido.
-            </Text>
-          </View>
-        </View>
+          <LargeHorizontalCard
+            image="https://blz-contentstack-images.akamaized.net/v3/assets/blt2477dcaf4ebd440c/blt63636a99fbb886d0/66a3ccde518bb27c65883c5c/Juno_Red_Promise.jpg"
+            title="Juno"
+            text={`- Primeira humana nascida em Marte.\n- Função: Suporte\n- Local: Marte → Gibraltar\n- Idade: 19`}
+            carousel
+          />
+
+          <LargeHorizontalCard
+            image="https://cdna.artstation.com/p/assets/images/images/058/352/352/large/tim-moreels-cassidy-ingame-07.jpg?1673970173"
+            title="Cassidy"
+            text={`- Fora da lei.\n- Função: Dano\n- Local: Santa Fé\n- Idade: 39`}
+            carousel
+          />
+        </ScrollView>
       </View>
 
-      {/*função*/}
+      {/* FUNÇÕES — QUADRADOS */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Funções</Text>
 
         <View style={styles.cardGrid}>
-          <View style={styles.card}>
-            <Image
-              source={{ uri: "https://via.placeholder.com/160x160" }}
-              style={styles.cardImage}
-            />
-            <Text style={styles.cardTitle}>Herói 1</Text>
-            <Text style={styles.cardText}>
-              Descrição do personagem, habilidades e estilo de jogo.
-            </Text>
-          </View>
-
-          <View style={styles.card}>
-            <Image
-              source={{ uri: "https://via.placeholder.com/160x160" }}
-              style={styles.cardImage}
-            />
-            <Text style={styles.cardTitle}>Herói 2</Text>
-            <Text style={styles.cardText}>
-              Outra descrição sobre o personagem escolhido.
-            </Text>
-          </View>
-        </View>
-
-        <View style={styles.card}>
-          <Image
-            source={{ uri: "https://via.placeholder.com/160x160" }}
-            style={styles.cardImage}
+          <SquareInteractiveCard
+            image="https://static.wikia.nocookie.net/overwatch/images/6/69/TankIcon.png"
+            title="Tanque"
+            text="Heróis tanque absorvem dano, rompem defesas e lideram o avanço do time."
           />
-          <Text style={styles.cardTitle}>Herói 2</Text>
-          <Text style={styles.cardText}>
-            Outra descrição sobre o personagem escolhido.
-          </Text>
+
+          <SquareInteractiveCard
+            image="https://static.wikia.nocookie.net/overwatch/images/5/5f/SupportIcon.png"
+            title="Suporte"
+            text="Heróis de suporte curam, protegem e fortalecem aliados."
+          />
         </View>
+
+        <SquareInteractiveCard
+          image="https://static.wikia.nocookie.net/overwatch/images/1/14/OffenseIcon.png"
+          title="Dano"
+          text="Heróis de dano eliminam inimigos rapidamente usando várias habilidades ofensivas."
+        />
       </View>
 
-      {/*gameplay*/}
+      {/* MODOS DE JOGO — QUADRADOS */}
       <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Gameplay</Text>
+        <Text style={styles.sectionTitle}>Modos de Jogo</Text>
 
         <View style={styles.cardGrid}>
-          <View style={styles.card}>
-            <Image
-              source={{ uri: "https://via.placeholder.com/160x160" }}
-              style={styles.cardImage}
-            />
-            <Text style={styles.cardTitle}>Modos de Jogo</Text>
-            <Text style={styles.cardText}>
-              Explicação rápida sobre modos e regras.
-            </Text>
-          </View>
+          <SquareInteractiveCard
+            image="https://static.wikia.nocookie.net/overwatch/images/5/52/EscortMap.jpg"
+            title="Jogo Rápido (Quick Play)"
+            text=" É o modo mais popular e acessível, ideal para jogadores que buscam 
+            partidas rápidas e casuais sem a pressão de uma classificação. É a melhor
+             forma de praticar heróis, aprender mapas e se divertir de forma 
+             descompromissada."
+          />
 
-          <View style={styles.card}>
-            <Image
-              source={{ uri: "https://via.placeholder.com/160x160" }}
-              style={styles.cardImage}
-            />
-            <Text style={styles.cardTitle}>Estratégias</Text>
-            <Text style={styles.cardText}>Dicas e formas de jogar melhor.</Text>
-          </View>
+          <SquareInteractiveCard
+            image="https://static.wikia.nocookie.net/overwatch/images/b/bf/HybridMap.jpg"
+            title="Híbrido"
+            text="Primeiro captura o ponto e depois escolta a carga."
+          />
+
+          <SquareInteractiveCard
+            image="https://static.wikia.nocookie.net/overwatch/images/f/fc/ControlMap.jpg"
+            title="Controle"
+            text="As equipes disputam o controle de um único ponto."
+          />
+
+          <SquareInteractiveCard
+            image="https://static.wikia.nocookie.net/overwatch/images/8/85/PushMap.jpg"
+            title="Avanço"
+            text="Ambas as equipes tentam empurrar o robô até o lado inimigo."
+          />
         </View>
       </View>
     </ScrollView>
   );
 }
 
+/* CARD GRANDE, HORIZONTAL */
+function LargeHorizontalCard({ image, title, text, carousel }) {
+  const [showText, setShowText] = useState(false);
+
+  return (
+    <View style={carousel ? styles.horizontalCardCarousel : styles.horizontalCard}>
+      <TouchableOpacity onPress={() => setShowText(!showText)}>
+        <Image
+          source={{ uri: image }}
+          style={carousel ? styles.horizontalImageCarousel : styles.horizontalImage}
+        />
+      </TouchableOpacity>
+
+      <Text style={styles.cardTitle}>{title}</Text>
+
+      {showText && <Text style={styles.cardText}>{text}</Text>}
+    </View>
+  );
+}
+
+/* CARD QUADRADO */
+function SquareInteractiveCard({ image, title, text }) {
+  const [showText, setShowText] = useState(false);
+
+  return (
+    <View style={styles.squareCard}>
+      <TouchableOpacity onPress={() => setShowText(!showText)}>
+        <Image source={{ uri: image }} style={styles.squareImage} />
+      </TouchableOpacity>
+
+      <Text style={styles.cardTitle}>{title}</Text>
+
+      {showText && <Text style={styles.cardText}>{text}</Text>}
+    </View>
+  );
+}
+
+/* ESTILOS */
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -184,16 +162,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 24,
   },
+
   title: {
-    fontSize: 48,
-    fontFamily: "Orbitron",
-    fontWeight: "bold",
+    fontSize: 42,
     color: "#ffb0f8",
+    fontWeight: "bold",
     textAlign: "center",
   },
+
   subtitle: {
-    fontSize: 22,
-    fontFamily: "Rajdhani",
+    fontSize: 20,
     color: "#ffc9f4",
     marginTop: 8,
     textAlign: "center",
@@ -205,70 +183,82 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     marginVertical: 12,
     borderRadius: 16,
-    shadowColor: "#000",
-    shadowOpacity: 0.1,
-    shadowOffset: { width: 0, height: 4 },
-    shadowRadius: 6,
     elevation: 3,
-  },
-  sectionTitle: {
-    fontSize: 28,
-    fontFamily: "Bungee",
-    color: "#cf8cc7",
-    marginBottom: 16,
-    fontWeight: "bold",
   },
 
-  singleCardWrapper: {
-    alignItems: "center",
+  sectionTitle: {
+    fontSize: 28,
+    color: "#cf8cc7",
+    fontWeight: "bold",
+    marginBottom: 16,
   },
-  singleCard: {
+
+  /* CARD HORIZONTAL - SOBRE O JOGO */
+  horizontalCard: {
     width: "100%",
-    backgroundColor: "#ffffff",
+    backgroundColor: "#fff",
     borderRadius: 14,
     padding: 12,
-    shadowColor: "#000",
-    shadowOpacity: 0.09,
-    shadowOffset: { width: 0, height: 4 },
-    shadowRadius: 6,
+    marginBottom: 15,
     elevation: 3,
+  },
+
+  horizontalImage: {
+    width: "100%",
+    height: 180,
+    borderRadius: 12,
+    backgroundColor: "#ccc",
+  },
+
+  /* CARD HORIZONTAL - CARROSSEL */
+  horizontalCardCarousel: {
+    width: 260,
+    backgroundColor: "#fff",
+    borderRadius: 14,
+    padding: 12,
+    marginRight: 14,
+    marginBottom: 15,
+    elevation: 3,
+  },
+
+  horizontalImageCarousel: {
+    width: "100%",
+    height: 180,
+    borderRadius: 12,
+    backgroundColor: "#ccc",
   },
 
   cardGrid: {
     flexDirection: "row",
-    justifyContent: "space-between",
     flexWrap: "wrap",
-    gap: 12,
+    justifyContent: "space-between",
   },
 
-  card: {
+  /* CARD QUADRADO */
+  squareCard: {
     width: "48%",
-    backgroundColor: "#ffffff",
+    backgroundColor: "#fff",
     borderRadius: 14,
     padding: 12,
-    shadowColor: "#000",
-    shadowOpacity: 0.07,
-    shadowOffset: { width: 0, height: 3 },
-    shadowRadius: 4,
-    elevation: 2,
+    marginBottom: 15,
+    elevation: 3,
   },
 
-  cardImage: {
+  squareImage: {
     width: "100%",
-    height: 150,
+    height: 120,
     borderRadius: 12,
-    backgroundColor: "#ccc",
   },
+
   cardTitle: {
     fontSize: 20,
-    fontFamily: "Bungee",
-    marginTop: 10,
     color: "#cf8cc7",
+    marginTop: 10,
     fontWeight: "bold",
   },
+
   cardText: {
     fontSize: 16,
-    fontFamily: "Rajdhani",
     color: "#cf8cc7",
     marginTop: 6,
   },
