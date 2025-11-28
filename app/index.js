@@ -9,58 +9,54 @@ import {
   TouchableOpacity, 
   Dimensions 
 } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
 
 const { width } = Dimensions.get("window");
 
 export default function Page() {
+
+  // animação usada apenas no carrossel e no texto
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const slideAnim = useRef(new Animated.Value(30)).current;
-  const gradientAnim = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
     Animated.parallel([
       Animated.timing(fadeAnim, {
         toValue: 1,
-        duration: 1000,
+        duration: 800,
         useNativeDriver: true,
       }),
       Animated.timing(slideAnim, {
         toValue: 0,
-        duration: 1000,
+        duration: 800,
         useNativeDriver: true,
-      }),
-      Animated.loop(
-        Animated.sequence([
-          Animated.timing(gradientAnim, { toValue: 1, duration: 4000, useNativeDriver: false }),
-          Animated.timing(gradientAnim, { toValue: 0, duration: 4000, useNativeDriver: false }),
-        ])
-      ),
+      })
     ]).start();
   }, []);
 
-  const bgInterpolation = gradientAnim.interpolate({
-    inputRange: [0, 1],
-    outputRange: ['#2c0f34', '#5d0f70']
-  });
-
   return (
-    <Animated.View style={[styles.container, { backgroundColor: bgInterpolation }]}>
+    <View style={{ flex: 1, backgroundColor: "#2c0f34" }}>
+      
       <ScrollView showsVerticalScrollIndicator={false}>
-        
+
         {/* HEADER */}
         <View style={styles.headerWrapper}>
           <Image 
             source={{ uri: "https://blz-contentstack-images.akamaized.net/v3/assets/blt2477dcaf4ebd440c/bltdabc3782553659f1/6785b50a1970a9f14eb5ccd7/xboxshowcase.png" }} 
             style={styles.headerImage}
           />
-          <Animated.View style={[styles.headerTextContainer, { opacity: fadeAnim, transform: [{ translateY: slideAnim }] }]}>
+
+          <Animated.View 
+            style={[
+              styles.headerTextContainer, 
+              { opacity: fadeAnim, transform: [{ translateY: slideAnim }] }
+            ]}
+          >
             <Text style={styles.title}>OVERWATCH 2</Text>
             <Text style={styles.subtitle}>Explore, jogue e descubra os heróis!</Text>
           </Animated.View>
         </View>
 
-        {/* CARROSSEL COM PARALLAX */}
+        {/* CARROSSEL */}
         <ScrollView 
           horizontal 
           showsHorizontalScrollIndicator={false}
@@ -75,32 +71,45 @@ export default function Page() {
             <TouchableOpacity key={i} activeOpacity={0.9}>
               <Animated.Image 
                 source={{ uri }}
-                style={[styles.carouselImg, { transform: [{ scale: fadeAnim.interpolate({ inputRange: [0, 1], outputRange: [0.95, 1] }) }] }]} 
+                style={[
+                  styles.carouselImg,
+                  {
+                    transform: [
+                      { scale: fadeAnim.interpolate({
+                          inputRange: [0, 1],
+                          outputRange: [0.95, 1]
+                        })
+                      }
+                    ]
+                  }
+                ]}
               />
             </TouchableOpacity>
           ))}
         </ScrollView>
 
-        {/* SOBRE O APP */}
-        <Animated.View style={[styles.infoCard, { opacity: fadeAnim, transform: [{ translateY: slideAnim }] }]}>
+        {/* SOBRE */}
+        <Animated.View 
+          style={[
+            styles.infoCard, 
+            { opacity: fadeAnim, transform: [{ translateY: slideAnim }] }
+          ]}
+        >
           <Text style={styles.infoTitle}>Sobre o App</Text>
           <Text style={styles.infoText}>
-            Esse app tem o objetivo de falar sobre o jogo Overwatch 2 e contar a vocês sobre a 
-            história dos jogos online, como surgiu e outras coisas... Esperamos que gostem!
+            Esse app tem o objetivo de falar sobre o jogo Overwatch 2 e contar a vocês 
+            sobre a história dos jogos online, como surgiu e outras coisas... 
+            Esperamos que gostem!
           </Text>
         </Animated.View>
 
         <View style={{ height: 40 }} />
       </ScrollView>
-    </Animated.View>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-
   headerWrapper: {
     position: "relative",
     marginBottom: 20,
@@ -148,10 +157,6 @@ const styles = StyleSheet.create({
     height: 180,
     borderRadius: 20,
     marginRight: 16,
-    shadowColor: "#fff",
-    shadowOpacity: 0.35,
-    shadowOffset: { width: 0, height: 5 },
-    shadowRadius: 15,
     elevation: 10,
   },
 
@@ -162,10 +167,6 @@ const styles = StyleSheet.create({
     padding: 24,
     borderRadius: 25,
     elevation: 8,
-    shadowColor: "#ff99dd",
-    shadowOpacity: 0.4,
-    shadowOffset: { width: 0, height: 6 },
-    shadowRadius: 20,
   },
 
   infoTitle: {

@@ -13,7 +13,7 @@ export default function Page() {
         </Text>
       </View>
 
-      {/* SOBRE O JOGO - AJUSTADO AO CONTAINER */}
+      {/* SOBRE O JOGO */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Sobre o Jogo</Text>
 
@@ -24,7 +24,7 @@ export default function Page() {
         />
       </View>
 
-      {/* PERSONAGENS — HORIZONTAL */}
+      {/* PERSONAGENS */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Personagens</Text>
 
@@ -52,7 +52,7 @@ export default function Page() {
         </ScrollView>
       </View>
 
-      {/* FUNÇÕES — QUADRADOS */}
+      {/* FUNÇÕES */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Funções</Text>
 
@@ -77,7 +77,7 @@ export default function Page() {
         />
       </View>
 
-      {/* MODOS DE JOGO — QUADRADOS */}
+      {/* MODOS DE JOGO */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Modos de Jogo</Text>
 
@@ -85,10 +85,7 @@ export default function Page() {
           <SquareInteractiveCard
             image="https://static.wikia.nocookie.net/overwatch/images/5/52/EscortMap.jpg"
             title="Jogo Rápido (Quick Play)"
-            text=" É o modo mais popular e acessível, ideal para jogadores que buscam 
-            partidas rápidas e casuais sem a pressão de uma classificação. É a melhor
-             forma de praticar heróis, aprender mapas e se divertir de forma 
-             descompromissada."
+            text={`É o modo mais popular e acessível, ideal para jogadores que buscam partidas rápidas e casuais sem a pressão de uma classificação.\nÉ a melhor forma de praticar heróis, aprender mapas e se divertir de forma descompromissada.`}
           />
 
           <SquareInteractiveCard
@@ -114,7 +111,7 @@ export default function Page() {
   );
 }
 
-/* CARD GRANDE, HORIZONTAL */
+/* CARD HORIZONTAL */
 function LargeHorizontalCard({ image, title, text, carousel }) {
   const [showText, setShowText] = useState(false);
 
@@ -193,7 +190,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
 
-  /* CARD HORIZONTAL - SOBRE O JOGO */
+  /* CARD HORIZONTAL */
   horizontalCard: {
     width: "100%",
     backgroundColor: "#fff",
@@ -210,7 +207,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#ccc",
   },
 
-  /* CARD HORIZONTAL - CARROSSEL */
+  /* CARD HORIZONTAL CARROSSEL */
   horizontalCardCarousel: {
     width: 260,
     backgroundColor: "#fff",
