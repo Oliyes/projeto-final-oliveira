@@ -93,8 +93,9 @@ const styles = StyleSheet.create({
     elevation: 6,
 
     flexDirection: Platform.OS === "web" ? "row" : "column",
-    gap: 25,
     alignItems: "center",
+
+    rowGap: 25, // substitui gap
   },
 
   photoWrapper: {
@@ -123,7 +124,7 @@ const styles = StyleSheet.create({
   infoRow: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 10,
+    columnGap: 10, // substitui gap
     marginVertical: 4,
   },
 
@@ -147,7 +148,8 @@ const styles = StyleSheet.create({
   tagContainer: {
     flexDirection: "row",
     flexWrap: "wrap",
-    gap: 10,
+    rowGap: 10,   // substitui gap
+    columnGap: 10,
     marginTop: 15,
   },
 
@@ -165,7 +167,7 @@ const styles = StyleSheet.create({
 
   socials: {
     flexDirection: "row",
-    gap: 20,
+    columnGap: 20, // substitui gap
     marginTop: 20,
     alignSelf: "center",
   },
