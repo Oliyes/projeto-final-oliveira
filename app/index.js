@@ -14,9 +14,8 @@ const { width } = Dimensions.get("window");
 
 export default function Page() {
 
-  // animação usada apenas no carrossel e no texto
   const fadeAnim = useRef(new Animated.Value(0)).current;
-  const slideAnim = useRef(new Animated.Value(30)).current;
+  const slideAnim = useRef(new Animated.Value(40)).current;
 
   useEffect(() => {
     Animated.parallel([
@@ -33,73 +32,101 @@ export default function Page() {
     ]).start();
   }, []);
 
+  const games = [
+    {
+      title: "Evento da 19º temporada, baile de máscara",
+      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOPyXIaQgfgyNOVTLWc4zP1GVZrOUEfXiVH6yN14Pwn_fwCRVBKr1px6aQVeJbBUXS0QM&usqp=CAU"
+    },
+    {
+      title: "Capa Oficial",
+      img: "https://bnetcmsus-a.akamaihd.net/cms/page_media/39/39CLP44LJ1NN1757586809181.png"
+    },
+    {
+      title: "Overwatch 2 – Cinematic",
+      img: "https://pt.egw.news/_next/image?url=https%3A%2F%2Fegw.news%2Fuploads%2Fnews%2F1%2F17%2F1751052661752_1751052661753.webp&w=1920&q=75"
+    }
+  ];
+
   return (
     <View style={{ flex: 1, backgroundColor: "#2c0f34" }}>
       
       <ScrollView showsVerticalScrollIndicator={false}>
 
-        {/* HEADER */}
-        <View style={styles.headerWrapper}>
+        {/* --- NOVO HEADER --- */}
+        <Animated.View 
+          style={[
+            styles.newHeader,
+            { opacity: fadeAnim, transform: [{ translateY: slideAnim }] }
+          ]}
+        >
           <Image 
-            source={{ uri: "https://blz-contentstack-images.akamaized.net/v3/assets/blt2477dcaf4ebd440c/bltdabc3782553659f1/6785b50a1970a9f14eb5ccd7/xboxshowcase.png" }} 
-            style={styles.headerImage}
+            source={{ uri: "https://blz-contentstack-images.akamaized.net/v3/assets/blt2477dcaf4ebd440c/bltdabc3782553659f1/6785b50a1970a9f14eb5ccd7/xboxshowcase.png" }}
+            style={styles.headerImg}
           />
 
-          <Animated.View 
-            style={[
-              styles.headerTextContainer, 
-              { opacity: fadeAnim, transform: [{ translateY: slideAnim }] }
-            ]}
-          >
-            <Text style={styles.title}>OVERWATCH 2</Text>
-            <Text style={styles.subtitle}>Explore, jogue e descubra os heróis!</Text>
-          </Animated.View>
-        </View>
+          <View style={styles.headerOverlay}>
+            <Text style={styles.headerTitle}>OVERWATCH 2</Text>
+            <Text style={styles.headerDesc}>A nova geração de heróis!</Text>
+          </View>
+        </Animated.View>
 
-        {/* CARROSSEL */}
-        <ScrollView 
-          horizontal 
-          showsHorizontalScrollIndicator={false}
-          style={styles.carousel}
-          contentContainerStyle={{ paddingHorizontal: 10 }}
+        {/* --- BLOCOS DE DESTAQUE --- */}
+        <Animated.View 
+          style={[
+            styles.sectionCard,
+            { opacity: fadeAnim, transform: [{ translateY: slideAnim }] }
+          ]}
         >
-          {[
-            "https://select.art.br/wp-content/uploads/2021/03/1.jpg",
-            "https://pt.egw.news/_next/image?url=https%3A%2F%2Fegw.news%2Fuploads%2Fnews%2F1%2F17%2F1751052661752_1751052661753.webp&w=1920&q=75",
-            "https://sm.ign.com/ign_br/screenshot/default/ow2-blizzcon-2019-screenshot-rio-lucio-1p-gameplay-01-png-jp_vbex.jpg"
-          ].map((uri, i) => (
-            <TouchableOpacity key={i} activeOpacity={0.9}>
-              <Animated.Image 
-                source={{ uri }}
-                style={[
-                  styles.carouselImg,
-                  {
-                    transform: [
-                      { scale: fadeAnim.interpolate({
-                          inputRange: [0, 1],
-                          outputRange: [0.95, 1]
-                        })
-                      }
-                    ]
-                  }
-                ]}
-              />
+          <Text style={styles.sectionTitle}>Destaques do Jogo</Text>
+
+          <View style={styles.rowFeatures}>
+            <View style={styles.featureBox}>
+              <Text style={styles.featureNum}>38+</Text>
+              <Text style={styles.featureLabel}>Heróis Jogáveis</Text>
+            </View>
+
+            <View style={styles.featureBox}>
+              <Text style={styles.featureNum}>24</Text>
+              <Text style={styles.featureLabel}>Mapas Ativos</Text>
+            </View>
+
+            <View style={styles.featureBox}>
+              <Text style={styles.featureNum}>5v5</Text>
+              <Text style={styles.featureLabel}>Novo Formato</Text>
+            </View>
+          </View>
+        </Animated.View>
+
+        {/* --- LISTA EM CARDS GRANDES COM TÍTULO VISÍVEL --- */}
+        <Text style={styles.carouselTitle}>Conteúdos do App</Text>
+
+        <ScrollView 
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          style={styles.carouselList}
+          contentContainerStyle={{ paddingHorizontal: 14 }}
+        >
+          {games.map((item, index) => (
+            <TouchableOpacity key={index} activeOpacity={0.9}>
+              <View style={styles.gameCard}>
+                <Image source={{ uri: item.img }} style={styles.gameImg} />
+                <Text style={styles.gameTitle}>{item.title}</Text>
+              </View>
             </TouchableOpacity>
           ))}
         </ScrollView>
 
-        {/* SOBRE */}
+        {/* --- SOBRE --- */}
         <Animated.View 
           style={[
-            styles.infoCard, 
+            styles.aboutCard,
             { opacity: fadeAnim, transform: [{ translateY: slideAnim }] }
           ]}
         >
-          <Text style={styles.infoTitle}>Sobre o App</Text>
-          <Text style={styles.infoText}>
-            Esse app tem o objetivo de falar sobre o jogo Overwatch 2 e contar a vocês 
-            sobre a história dos jogos online, como surgiu e outras coisas... 
-            Esperamos que gostem!
+          <Text style={styles.aboutTitle}>Sobre o App</Text>
+          <Text style={styles.aboutText}>
+            Este aplicativo foi criado para mostrar informações sobre Overwatch 2,
+            mapas, heróis, história e curiosidades sobre o mundo dos games online.
           </Text>
         </Animated.View>
 
@@ -110,75 +137,144 @@ export default function Page() {
 }
 
 const styles = StyleSheet.create({
-  headerWrapper: {
-    position: "relative",
+
+  /* HEADER NOVO */
+  newHeader: {
+    width: "100%",
+    height: 260,
     marginBottom: 20,
   },
 
-  headerImage: {
+  headerImg: {
     width: "100%",
-    height: 250,
-    borderBottomLeftRadius: 30,
-    borderBottomRightRadius: 30,
+    height: "100%",
+    borderBottomLeftRadius: 40,
+    borderBottomRightRadius: 40,
   },
 
-  headerTextContainer: {
+  headerOverlay: {
     position: "absolute",
-    bottom: 20,
+    bottom: 25,
     left: 20,
   },
 
-  title: {
-    fontSize: 38,
-    color: "#ffeb3b",
+  headerTitle: {
+    fontSize: 36,
+    color: "#fff",
     fontWeight: "900",
-    textTransform: "uppercase",
     textShadowColor: "#ff00c8",
     textShadowOffset: { width: 0, height: 2 },
-    textShadowRadius: 12,
+    textShadowRadius: 10,
   },
 
-  subtitle: {
-    fontSize: 20,
-    color: "#ffffff",
+  headerDesc: {
+    fontSize: 18,
+    color: "#ffd4f8",
+    marginTop: 4,
     fontWeight: "600",
-    marginTop: 5,
-    textShadowColor: "#ff00c8",
-    textShadowOffset: { width: 0, height: 1 },
-    textShadowRadius: 8,
   },
 
-  carousel: {
-    marginTop: 15,
-  },
-
-  carouselImg: {
-    width: width * 0.7,
-    height: 180,
-    borderRadius: 20,
-    marginRight: 16,
-    elevation: 10,
-  },
-
-  infoCard: {
+  /* BLOCOS */
+  sectionCard: {
     backgroundColor: "#ffe6f9",
     marginHorizontal: 20,
+    padding: 20,
+    borderRadius: 25,
+    elevation: 5,
+  },
+
+  sectionTitle: {
+    fontSize: 22,
+    fontWeight: "bold",
+    color: "#b45ba6",
+    marginBottom: 18,
+  },
+
+  rowFeatures: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+
+  featureBox: {
+    backgroundColor: "#ffffff",
+    width: width * 0.25,
+    paddingVertical: 18,
+    borderRadius: 16,
+    alignItems: "center",
+    elevation: 4,
+  },
+
+  featureNum: {
+    fontSize: 22,
+    fontWeight: "bold",
+    color: "#c44ab8",
+  },
+
+  featureLabel: {
+    fontSize: 12,
+    textAlign: "center",
+    marginTop: 4,
+    color: "#6a1b9a",
+  },
+
+  /* CARDS GRANDES HORIZONTAIS */
+  carouselTitle: {
+    color: "#ffd6f7",
+    fontSize: 20,
+    fontWeight: "700",
     marginTop: 20,
+    marginLeft: 20,
+  },
+
+  carouselList: {
+    marginTop: 10,
+  },
+
+  gameCard: {
+    width: width * 0.6,
+    marginRight: 16,
+    backgroundColor: "#ffe6f9",
+    borderRadius: 20,
+    paddingBottom: 10,
+    elevation: 6,
+  },
+
+  gameImg: {
+    width: "100%",
+    height: 150,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+  },
+
+  gameTitle: {
+    marginTop: 8,
+    fontWeight: "700",
+    fontSize: 16,
+    color: "#b34da7",
+    textAlign: "center",
+    paddingHorizontal: 6,
+  },
+
+  /* SOBRE */
+  aboutCard: {
+    backgroundColor: "#fedcff",
+    marginHorizontal: 20,
+    marginTop: 25,
     padding: 24,
     borderRadius: 25,
     elevation: 8,
   },
 
-  infoTitle: {
-    fontSize: 26,
+  aboutTitle: {
+    fontSize: 24,
     fontWeight: "bold",
     color: "#cf8cc7",
     marginBottom: 12,
   },
 
-  infoText: {
-    fontSize: 16,
-    lineHeight: 24,
+  aboutText: {
+    fontSize: 15,
+    lineHeight: 22,
     color: "#6a1b9a",
   },
 });

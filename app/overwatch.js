@@ -83,27 +83,21 @@ export default function Page() {
 
         <View style={styles.cardGrid}>
           <SquareInteractiveCard
-            image="https://static.wikia.nocookie.net/overwatch/images/5/52/EscortMap.jpg"
+            image="https://kotaku.com/igdb/image/upload/t_720p/scyqbt.jpg"
             title="Jogo Rápido (Quick Play)"
             text={`É o modo mais popular e acessível, ideal para jogadores que buscam partidas rápidas e casuais sem a pressão de uma classificação.\nÉ a melhor forma de praticar heróis, aprender mapas e se divertir de forma descompromissada.`}
           />
 
           <SquareInteractiveCard
-            image="https://static.wikia.nocookie.net/overwatch/images/b/bf/HybridMap.jpg"
-            title="Híbrido"
-            text="Primeiro captura o ponto e depois escolta a carga."
+            image="https://bnetcmsus-a.akamaihd.net/cms/blog_header/q4/Q4K237E1EGPI1467079634956.jpg"
+            title="Competitivo"
+            text="O modo ranqueado, onde os jogadores são classificados e ganham recompensas, exigindo mais foco e dedicação."
           />
 
           <SquareInteractiveCard
-            image="https://static.wikia.nocookie.net/overwatch/images/f/fc/ControlMap.jpg"
-            title="Controle"
-            text="As equipes disputam o controle de um único ponto."
-          />
-
-          <SquareInteractiveCard
-            image="https://static.wikia.nocookie.net/overwatch/images/8/85/PushMap.jpg"
-            title="Avanço"
-            text="Ambas as equipes tentam empurrar o robô até o lado inimigo."
+            image="https://meups.com.br/wp-content/uploads/2016/11/Overwatch-novos-mapas-e-modo-arcade-e1478385013622.jpg"
+            title="Arcade"
+            text="Uma seção com diversos modos de jogo temporários ou fixos."
           />
         </View>
       </View>

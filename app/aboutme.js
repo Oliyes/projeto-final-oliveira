@@ -1,174 +1,258 @@
-import { StyleSheet, Text, View, Image, Platform } from "react-native";
-import Ionicons from "react-native-vector-icons/Ionicons";
-import foto from "../assets/olizin.jpg";
+import { useState, useEffect } from "react";
+import { ScrollView, View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
+import { Audio } from "expo-av";
+import { MaterialIcons } from "@expo/vector-icons";
 
 export default function Page() {
+
+  const [showBio, setShowBio] = useState(false);
+  const [showHobbies, setShowHobbies] = useState(false);
+  const [showMusic, setShowMusic] = useState(false);
+
+  const [sound, setSound] = useState(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  // Carrega o áudio quando a seção aparece
+  useEffect(() => {
+    if (showMusic) {
+      loadSound();
+    }
+    return () => {
+      unloadSound();
+    };
+  }, [showMusic]);
+
+  async function loadSound() {
+    const { sound } = await Audio.Sound.createAsync(
+      require("../assets/aoikoidaidaro.mp3")
+    );
+    setSound(sound);
+  }
+
+  async function unloadSound() {
+    if (sound) {
+      await sound.unloadAsync();
+      setSound(null);
+      setIsPlaying(false);
+    }
+  }
+
+  async function handlePlayPause() {
+    if (!sound) return;
+    if (isPlaying) {
+      await sound.pauseAsync();
+      setIsPlaying(false);
+    } else {
+      await sound.playAsync();
+      setIsPlaying(true);
+    }
+  }
+
   return (
-    <View style={styles.container}>
-      
-      <Text style={styles.title}>Sobre mim</Text>
+    <ScrollView style={styles.container}>
 
-      <View style={styles.card}>
-        
-        {/* FOTO */}
-        <View style={styles.photoWrapper}>
-          <Image source={foto} style={styles.foto} />
-        </View>
-
-        <View style={styles.infoBox}>
-          <Info label="Nome" value="Ana Clara Oli" icon="person-circle-outline" />
-          <Info label="RM" value="08308" icon="finger-print-outline" />
-          <Info label="Endereço" value="Rua Marcondes, 15, Jd. Alvorada" icon="home-outline" />
-          <Info label="Cidade" value="Presidente Venceslau" icon="business-outline" />
-          <Info label="Estado" value="São Paulo" icon="flag-outline" />
-
-          {/* BIO */}
-          <Text style={styles.bio}>
-            Sou apaixonada por tecnologia, games e design.  
-            Adoro criar experiências bonitas, criativas e funcionais!
-          </Text>
-
-          {/* HABILIDADES */}
-          <View style={styles.tagContainer}>
-            {["React Native", "UI Design", "Criatividade", "Games"].map((item, i) => (
-              <View key={i} style={styles.tag}>
-                <Text style={styles.tagText}>{item}</Text>
-              </View>
-            ))}
-          </View>
-
-          {/* REDES SOCIAIS */}
-          <View style={styles.socials}>
-            <Ionicons name="logo-instagram" size={32} color="#C13584" />
-            <Ionicons name="logo-github" size={32} color="#000" />
-            <Ionicons name="logo-tiktok" size={32} color="#000" />
-          </View>
-
-        </View>
-
+      {/* HEADER */}
+      <View style={styles.header}>
+        <Text style={styles.headerTitle}>Sobre Mim</Text>
+        <Text style={styles.headerSubtitle}>Conheça um pouco mais sobre quem eu sou</Text>
       </View>
-    </View>
-  );
-}
 
-/* Componente Info com ícone */
-function Info({ label, value, icon }) {
-  return (
-    <View style={styles.infoRow}>
-      <Ionicons name={icon} size={22} color="#7a1bb3" />
-      <Text style={styles.subtitle}>
-        <Text style={styles.bold}>{label}:</Text> {value}
-      </Text>
-    </View>
+      {/* FOTO DE PERFIL */}
+      <View style={styles.photoWrapper}>
+        <Image
+          style={styles.profileImage}
+          source={require("../assets/oli.jpg")}
+        />
+      </View>
+
+      {/* NOME */}
+      <View style={styles.center}>
+        <Text style={styles.name}>Ana Clara</Text>
+      </View>
+
+      {/* SOBRE MIM */}
+      <View style={styles.section}>
+        <TouchableOpacity style={styles.cardButton} onPress={() => setShowBio(!showBio)}>
+          <Text style={styles.cardButtonText}>Sobre mim</Text>
+        </TouchableOpacity>
+
+        {showBio && (
+          <View style={styles.cardContent}>
+            <Text style={styles.cardText}>
+              Eu sou estudante do 2º Info, meu nome é Ana Clara Oliveira, tenho 16 anos,
+              e pra falar a verdade, eu não gostava muito de programar. Porém, com esse projeto,
+              me diverti bastante pesquisando e conhecendo mais funções.
+            </Text>
+          </View>
+        )}
+      </View>
+
+      {/* HOBBIES */}
+      <View style={styles.section}>
+        <TouchableOpacity style={styles.cardButton} onPress={() => setShowHobbies(!showHobbies)}>
+          <Text style={styles.cardButtonText}>Meus Hobbies</Text>
+        </TouchableOpacity>
+       
+
+        {showHobbies && (
+          <View style={styles.cardContent}>
+            <Text style={styles.cardText}>
+              No momento, meu hobbie favorito é descansar e passar tempo com meu namorado.
+            </Text>
+          </View>
+        )}
+      </View>
+
+      {/* MÚSICA FAVORITA */}
+      <View style={styles.section}>
+        <TouchableOpacity style={styles.cardButton} onPress={() => setShowMusic(!showMusic)}>
+          <Text style={styles.cardButtonText}>Minha Música Favorita</Text>
+        </TouchableOpacity>
+
+        {showMusic && (
+          <View style={styles.albumBlock}>
+            <Image
+              source={require("../assets/aoikoi.jpg")}
+              style={styles.albumCover}
+            />
+
+            <Text style={[styles.cardText, { marginTop: 10 }]}>
+              Aoi, Koi, Daiidaro No Hi — Mass of Fermenting Dregs
+            </Text>
+
+            <TouchableOpacity style={styles.musicButton} onPress={handlePlayPause}>
+              {isPlaying ? (
+                <MaterialIcons name="pause-circle-filled" size={32} color="#4d2847" />
+              ) : (
+                <MaterialIcons name="play-circle-filled" size={32} color="#4d2847" />
+              )}
+            </TouchableOpacity>
+          </View>
+        )}
+      </View>
+
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    paddingVertical: 40,
-    backgroundColor: "#f7d6ff",
+    backgroundColor: "#4d2847",
   },
 
-  title: {
+  /* HEADER */
+  header: {
+    alignItems: "center",
+    padding: 24,
+  },
+
+  headerTitle: {
     fontSize: 42,
-    fontWeight: "900",
-    color: "#5a0a78",
-    marginBottom: 30,
-    textTransform: "uppercase",
-    letterSpacing: 2,
-  },
-
-  card: {
-    width: "90%",
-    backgroundColor: "#ffffff",
-    borderRadius: 25,
-    padding: 25,
-
-    shadowColor: "#000",
-    shadowOpacity: 0.15,
-    shadowOffset: { width: 0, height: 4 },
-    shadowRadius: 10,
-    elevation: 6,
-
-    flexDirection: Platform.OS === "web" ? "row" : "column",
-    alignItems: "center",
-
-    rowGap: 25, // substitui gap
-  },
-
-  photoWrapper: {
-    borderWidth: 5,
-    borderColor: "#d04eff",
-    padding: 6,
-    borderRadius: 150,
-
-    shadowColor: "#d04eff",
-    shadowOpacity: 0.5,
-    shadowRadius: 20,
-    elevation: 12,
-  },
-
-  foto: {
-    width: 180,
-    height: 180,
-    borderRadius: 100,
-  },
-
-  infoBox: {
-    flex: 1,
-    width: "100%",
-  },
-
-  infoRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    columnGap: 10, // substitui gap
-    marginVertical: 4,
-  },
-
-  subtitle: {
-    fontSize: 18,
-    color: "#312244",
-  },
-
-  bold: {
+    color: "#ffb0f8",
     fontWeight: "bold",
-    color: "#7a1bb3",
+    textAlign: "center",
   },
 
-  bio: {
+  headerSubtitle: {
+    fontSize: 20,
+    color: "#ffc9f4",
+    marginTop: 8,
+    textAlign: "center",
+  },
+
+  /* FOTO */
+  photoWrapper: {
+    alignItems: "center",
     marginTop: 10,
+  },
+
+  profileImage: {
+    width: 140,
+    height: 140,
+    borderRadius: 100,
+    borderWidth: 5,
+    borderColor: "#ffe6f9",
+  },
+
+  center: {
+    alignItems: "center",
+    marginVertical: 15,
+  },
+
+  name: {
+    fontSize: 30,
+    color: "#ffe6f9",
+    fontWeight: "bold",
+  },
+
+  /* SESSÕES */
+  section: {
+    padding: 20,
+    backgroundColor: "#ffe6f9",
+    marginHorizontal: 16,
+    marginVertical: 10,
+    borderRadius: 16,
+    elevation: 3,
+  },
+
+  /* BOTÕES */
+  cardButton: {
+    backgroundColor: "#ffb0f8",
+    padding: 14,
+    borderRadius: 12,
+  },
+
+  cardButtonText: {
+    fontSize: 20,
+    color: "#4d2847",
+    fontWeight: "bold",
+  },
+
+  /* CONTEÚDO EXPANDIDO */
+  cardContent: {
+    marginTop: 12,
+    backgroundColor: "#fff",
+    padding: 14,
+    borderRadius: 12,
+  },
+
+  cardText: {
+    color: "#cf8cc7",
     fontSize: 16,
-    color: "#4a2f5c",
-    lineHeight: 22,
+    textAlign: "center",
   },
 
-  tagContainer: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    rowGap: 10,   // substitui gap
-    columnGap: 10,
-    marginTop: 15,
+  /* MÚSICA */
+  albumBlock: {
+    marginTop: 12,
+    backgroundColor: "#fff",
+    padding: 14,
+    borderRadius: 12,
+    alignItems: "center",
   },
 
-  tag: {
-    backgroundColor: "#e9c6ff",
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 15,
+  albumCover: {
+    width: 170,
+    height: 170,
+    borderRadius: 12,
   },
 
-  tagText: {
-    color: "#5a0a78",
-    fontWeight: "600",
+  musicButton: {
+    backgroundColor: "#ffb0f8",
+    padding: 5,
+    borderRadius: 10,
+    marginTop: 12,
+    width: 50,
+    alignItems: "center",
+    justifyContent: "center",
   },
 
-  socials: {
-    flexDirection: "row",
-    columnGap: 20, // substitui gap
-    marginTop: 20,
-    alignSelf: "center",
+  musicButtonText: {
+    color: "#4d2847",
+    fontSize: 18,
+    fontWeight: "bold",
+    textAlign: "center",
   },
+
 });
