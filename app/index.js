@@ -37,7 +37,7 @@ export default function Page() {
   const games = [
     {
       title: "Evento da 19º temporada",
-      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOPyXIaQgfgyNOVTLWc4zP1GVZrOUEfXiVH6yN14Pwn_fwCRVBKr1px6aQVeJbBUXS0QM&usqp=CAU"
+      img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2357570/d0142847ab1c8f499173a075d240d10852f676fe/capsule_616x353_alt_assets_17.jpg?t=1763157251"
     },
     {
       title: "Capa Oficial",

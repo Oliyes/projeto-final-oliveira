@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
   },
 
   cardText: {
-    fontSize: 16,
+    fontSize: 14,
     color: "#cf8cc7",
     marginTop: 8,
     paddingHorizontal: 14,
