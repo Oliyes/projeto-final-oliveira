@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { 
   StyleSheet, 
   Text, 
@@ -7,7 +7,8 @@ import {
   ScrollView, 
   Animated, 
   TouchableOpacity, 
-  Dimensions 
+  Dimensions, 
+  ImageBackground 
 } from "react-native";
 
 const { width } = Dimensions.get("window");
@@ -16,6 +17,7 @@ export default function Page() {
 
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const slideAnim = useRef(new Animated.Value(40)).current;
+  const [scaleAnim, setScaleAnim] = useState(new Animated.Value(1));  // Novo estado para o efeito de clique
 
   useEffect(() => {
     Animated.parallel([
@@ -34,7 +36,7 @@ export default function Page() {
 
   const games = [
     {
-      title: "Evento da 19º temporada, baile de máscara",
+      title: "Evento da 19º temporada",
       img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOPyXIaQgfgyNOVTLWc4zP1GVZrOUEfXiVH6yN14Pwn_fwCRVBKr1px6aQVeJbBUXS0QM&usqp=CAU"
     },
     {
@@ -47,117 +49,133 @@ export default function Page() {
     }
   ];
 
+  // Função para animação de clique
+  const handlePressIn = () => {
+    Animated.spring(scaleAnim, {
+      toValue: 0.95,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  const handlePressOut = () => {
+    Animated.spring(scaleAnim, {
+      toValue: 1,
+      useNativeDriver: true,
+    }).start();
+  };
+
   return (
     <View style={{ flex: 1, backgroundColor: "#2c0f34" }}>
       
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ImageBackground 
+        source={{uri: "https://marketplace.canva.com/EAGLZvwV8tQ/1/0/900w/canva-purple-gradient-futuristic-background-instagram-story-1Y0dOdHbd08.jpg"}} // Exemplo de textura de fundo
+        style={{ flex: 1 }}
+      >
+        <ScrollView showsVerticalScrollIndicator={false}>
 
-        {/* --- NOVO HEADER --- */}
-        <Animated.View 
-          style={[
-            styles.newHeader,
-            { opacity: fadeAnim, transform: [{ translateY: slideAnim }] }
-          ]}
-        >
-          <Image 
-            source={{ uri: "https://blz-contentstack-images.akamaized.net/v3/assets/blt2477dcaf4ebd440c/bltdabc3782553659f1/6785b50a1970a9f14eb5ccd7/xboxshowcase.png" }}
-            style={styles.headerImg}
-          />
-
-          <View style={styles.headerOverlay}>
-            <Text style={styles.headerTitle}>OVERWATCH 2</Text>
-            <Text style={styles.headerDesc}>A nova geração de heróis!</Text>
-          </View>
-        </Animated.View>
-
-        {/* --- BLOCOS DE DESTAQUE --- */}
-        <Animated.View 
-          style={[
-            styles.sectionCard,
-            { opacity: fadeAnim, transform: [{ translateY: slideAnim }] }
-          ]}
-        >
-          <Text style={styles.sectionTitle}>Destaques do Jogo</Text>
-
-          <View style={styles.rowFeatures}>
-            <View style={styles.featureBox}>
-              <Text style={styles.featureNum}>38+</Text>
-              <Text style={styles.featureLabel}>Heróis Jogáveis</Text>
+          {/* --- NOVO HEADER --- */}
+          <Animated.View 
+            style={[ 
+              styles.newHeader, 
+              { opacity: fadeAnim, transform: [{ translateY: slideAnim }] } 
+            ]}
+          >
+            <Image 
+              source={{ uri: "https://blz-contentstack-images.akamaized.net/v3/assets/blt2477dcaf4ebd440c/bltdabc3782553659f1/6785b50a1970a9f14eb5ccd7/xboxshowcase.png" }}
+              style={styles.headerImg}
+            />
+            <View style={styles.headerOverlay}>
+              <Text style={styles.headerTitle}>OVERWATCH 2</Text>
+              <Text style={styles.headerDesc}>A nova geração de heróis!</Text>
             </View>
+          </Animated.View>
 
-            <View style={styles.featureBox}>
-              <Text style={styles.featureNum}>24</Text>
-              <Text style={styles.featureLabel}>Mapas Ativos</Text>
-            </View>
-
-            <View style={styles.featureBox}>
-              <Text style={styles.featureNum}>5v5</Text>
-              <Text style={styles.featureLabel}>Novo Formato</Text>
-            </View>
-          </View>
-        </Animated.View>
-
-        {/* --- LISTA EM CARDS GRANDES COM TÍTULO VISÍVEL --- */}
-        <Text style={styles.carouselTitle}>Conteúdos do App</Text>
-
-        <ScrollView 
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          style={styles.carouselList}
-          contentContainerStyle={{ paddingHorizontal: 14 }}
-        >
-          {games.map((item, index) => (
-            <TouchableOpacity key={index} activeOpacity={0.9}>
-              <View style={styles.gameCard}>
-                <Image source={{ uri: item.img }} style={styles.gameImg} />
-                <Text style={styles.gameTitle}>{item.title}</Text>
+          {/* --- BLOCOS DE DESTAQUE --- */}
+          <Animated.View 
+            style={[ 
+              styles.sectionCard, 
+              { opacity: fadeAnim, transform: [{ translateY: slideAnim }] }
+            ]}
+          >
+            <Text style={styles.sectionTitle}>Destaques do Jogo</Text>
+            <View style={styles.rowFeatures}>
+              <View style={styles.featureBox}>
+                <Text style={styles.featureNum}>38+</Text>
+                <Text style={styles.featureLabel}>Heróis Jogáveis</Text>
               </View>
-            </TouchableOpacity>
-          ))}
+              <View style={styles.featureBox}>
+                <Text style={styles.featureNum}>24</Text>
+                <Text style={styles.featureLabel}>Mapas Ativos</Text>
+              </View>
+              <View style={styles.featureBox}>
+                <Text style={styles.featureNum}>5v5</Text>
+                <Text style={styles.featureLabel}>Novo Formato</Text>
+              </View>
+            </View>
+          </Animated.View>
+
+          {/* --- LISTA EM CARDS GRANDES COM TÍTULO VISÍVEL --- */}
+          <Text style={styles.carouselTitle}>Conteúdos do App</Text>
+          <ScrollView 
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            style={styles.carouselList}
+            contentContainerStyle={{ paddingHorizontal: 14 }}
+          >
+            {games.map((item, index) => (
+              <TouchableOpacity 
+                key={index} 
+                activeOpacity={0.9}
+                onPressIn={handlePressIn} 
+                onPressOut={handlePressOut}
+              >
+                <Animated.View style={[styles.gameCard, { transform: [{ scale: scaleAnim }] }]}>
+                  <Image source={{ uri: item.img }} style={styles.gameImg} />
+                  <Text style={styles.gameTitle}>{item.title}</Text>
+                </Animated.View>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+
+          {/* --- SOBRE --- */}
+          <Animated.View 
+            style={[ 
+              styles.aboutCard, 
+              { opacity: fadeAnim, transform: [{ translateY: slideAnim }] }
+            ]}
+          >
+            <Text style={styles.aboutTitle}>Sobre o App</Text>
+            <Text style={styles.aboutText}>
+              Este aplicativo foi criado para mostrar informações sobre Overwatch 2,
+              mapas, heróis, história e curiosidades sobre o mundo dos games online.
+            </Text>
+          </Animated.View>
+
+          <View style={{ height: 40 }} />
         </ScrollView>
-
-        {/* --- SOBRE --- */}
-        <Animated.View 
-          style={[
-            styles.aboutCard,
-            { opacity: fadeAnim, transform: [{ translateY: slideAnim }] }
-          ]}
-        >
-          <Text style={styles.aboutTitle}>Sobre o App</Text>
-          <Text style={styles.aboutText}>
-            Este aplicativo foi criado para mostrar informações sobre Overwatch 2,
-            mapas, heróis, história e curiosidades sobre o mundo dos games online.
-          </Text>
-        </Animated.View>
-
-        <View style={{ height: 40 }} />
-      </ScrollView>
+      </ImageBackground>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-
   /* HEADER NOVO */
   newHeader: {
     width: "100%",
     height: 260,
     marginBottom: 20,
   },
-
   headerImg: {
     width: "100%",
     height: "100%",
     borderBottomLeftRadius: 40,
     borderBottomRightRadius: 40,
   },
-
   headerOverlay: {
     position: "absolute",
     bottom: 25,
     left: 20,
   },
-
   headerTitle: {
     fontSize: 36,
     color: "#fff",
@@ -166,14 +184,12 @@ const styles = StyleSheet.create({
     textShadowOffset: { width: 0, height: 2 },
     textShadowRadius: 10,
   },
-
   headerDesc: {
     fontSize: 18,
     color: "#ffd4f8",
     marginTop: 4,
     fontWeight: "600",
   },
-
   /* BLOCOS */
   sectionCard: {
     backgroundColor: "#ffe6f9",
@@ -182,19 +198,16 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     elevation: 5,
   },
-
   sectionTitle: {
     fontSize: 22,
     fontWeight: "bold",
     color: "#b45ba6",
     marginBottom: 18,
   },
-
   rowFeatures: {
     flexDirection: "row",
     justifyContent: "space-between",
   },
-
   featureBox: {
     backgroundColor: "#ffffff",
     width: width * 0.25,
@@ -203,20 +216,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
     elevation: 4,
   },
-
   featureNum: {
     fontSize: 22,
     fontWeight: "bold",
     color: "#c44ab8",
   },
-
   featureLabel: {
     fontSize: 12,
     textAlign: "center",
     marginTop: 4,
     color: "#6a1b9a",
   },
-
   /* CARDS GRANDES HORIZONTAIS */
   carouselTitle: {
     color: "#ffd6f7",
@@ -225,11 +235,9 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginLeft: 20,
   },
-
   carouselList: {
     marginTop: 10,
   },
-
   gameCard: {
     width: width * 0.6,
     marginRight: 16,
@@ -238,14 +246,12 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     elevation: 6,
   },
-
   gameImg: {
     width: "100%",
     height: 150,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
   },
-
   gameTitle: {
     marginTop: 8,
     fontWeight: "700",
@@ -254,7 +260,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     paddingHorizontal: 6,
   },
-
   /* SOBRE */
   aboutCard: {
     backgroundColor: "#fedcff",
@@ -264,14 +269,12 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     elevation: 8,
   },
-
   aboutTitle: {
     fontSize: 24,
     fontWeight: "bold",
     color: "#cf8cc7",
     marginBottom: 12,
   },
-
   aboutText: {
     fontSize: 15,
     lineHeight: 22,

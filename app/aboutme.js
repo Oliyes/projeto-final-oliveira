@@ -1,5 +1,13 @@
 import { useState, useEffect } from "react";
-import { ScrollView, View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  ScrollView,
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  ImageBackground
+} from "react-native";
 import { Audio } from "expo-av";
 import { MaterialIcons } from "@expo/vector-icons";
 
@@ -12,14 +20,9 @@ export default function Page() {
   const [sound, setSound] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
 
-  // Carrega o áudio quando a seção aparece
   useEffect(() => {
-    if (showMusic) {
-      loadSound();
-    }
-    return () => {
-      unloadSound();
-    };
+    if (showMusic) loadSound();
+    return () => unloadSound();
   }, [showMusic]);
 
   async function loadSound() {
@@ -49,99 +52,102 @@ export default function Page() {
   }
 
   return (
-    <ScrollView style={styles.container}>
+    <ImageBackground
+      source={{ uri: "https://marketplace.canva.com/EAGLZvwV8tQ/1/0/900w/canva-purple-gradient-futuristic-background-instagram-story-1Y0dOdHbd08.jpg" }}
+      style={{ flex: 1 }}
+    >
+      <ScrollView style={styles.container}>
 
-      {/* HEADER */}
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>Sobre Mim</Text>
-        <Text style={styles.headerSubtitle}>Conheça um pouco mais sobre quem eu sou</Text>
-      </View>
+        {/* HEADER */}
+        <View style={styles.header}>
+          <Text style={styles.headerTitle}>Sobre Mim</Text>
+          <Text style={styles.headerSubtitle}>
+            Conheça um pouco mais sobre quem eu sou
+          </Text>
+        </View>
 
-      {/* FOTO DE PERFIL */}
-      <View style={styles.photoWrapper}>
-        <Image
-          style={styles.profileImage}
-          source={require("../assets/oli.jpg")}
-        />
-      </View>
+        {/* FOTO */}
+        <View style={styles.photoWrapper}>
+          <Image
+            style={styles.profileImage}
+            source={require("../assets/oli.jpg")}
+          />
+        </View>
 
-      {/* NOME */}
-      <View style={styles.center}>
-        <Text style={styles.name}>Ana Clara</Text>
-      </View>
+        <View style={styles.center}>
+          <Text style={styles.name}>Ana Clara</Text>
+        </View>
 
-      {/* SOBRE MIM */}
-      <View style={styles.section}>
-        <TouchableOpacity style={styles.cardButton} onPress={() => setShowBio(!showBio)}>
-          <Text style={styles.cardButtonText}>Sobre mim</Text>
-        </TouchableOpacity>
+        {/* SOBRE MIM */}
+        <View style={styles.section}>
+          <TouchableOpacity style={styles.cardButton} onPress={() => setShowBio(!showBio)}>
+            <Text style={styles.cardButtonText}>Sobre mim</Text>
+          </TouchableOpacity>
 
-        {showBio && (
-          <View style={styles.cardContent}>
-            <Text style={styles.cardText}>
-              Eu sou estudante do 2º Info, meu nome é Ana Clara Oliveira, tenho 16 anos,
-              e pra falar a verdade, eu não gostava muito de programar. Porém, com esse projeto,
-              me diverti bastante pesquisando e conhecendo mais funções.
-            </Text>
-          </View>
-        )}
-      </View>
+          {showBio && (
+            <View style={styles.cardContent}>
+              <Text style={styles.cardText}>
+                Eu sou estudante do 2º Info, meu nome é Ana Clara Oliveira, tenho 16 anos,
+                e pra falar a verdade, eu não gostava muito de programar. Porém, com esse projeto,
+                me diverti bastante pesquisando e conhecendo mais funções.
+              </Text>
+            </View>
+          )}
+        </View>
 
-      {/* HOBBIES */}
-      <View style={styles.section}>
-        <TouchableOpacity style={styles.cardButton} onPress={() => setShowHobbies(!showHobbies)}>
-          <Text style={styles.cardButtonText}>Meus Hobbies</Text>
-        </TouchableOpacity>
-       
+        {/* HOBBIES */}
+        <View style={styles.section}>
+          <TouchableOpacity style={styles.cardButton} onPress={() => setShowHobbies(!showHobbies)}>
+            <Text style={styles.cardButtonText}>Meus Hobbies</Text>
+          </TouchableOpacity>
 
-        {showHobbies && (
-          <View style={styles.cardContent}>
-            <Text style={styles.cardText}>
-              No momento, meu hobbie favorito é descansar e passar tempo com meu namorado.
-            </Text>
-          </View>
-        )}
-      </View>
+          {showHobbies && (
+            <View style={styles.cardContent}>
+              <Text style={styles.cardText}>
+                No momento, meu hobbie favorito é descansar e passar tempo com meu namorado.
+              </Text>
+            </View>
+          )}
+        </View>
 
-      {/* MÚSICA FAVORITA */}
-      <View style={styles.section}>
-        <TouchableOpacity style={styles.cardButton} onPress={() => setShowMusic(!showMusic)}>
-          <Text style={styles.cardButtonText}>Minha Música Favorita</Text>
-        </TouchableOpacity>
+        {/* MÚSICA */}
+        <View style={styles.section}>
+          <TouchableOpacity style={styles.cardButton} onPress={() => setShowMusic(!showMusic)}>
+            <Text style={styles.cardButtonText}>Minha Música Favorita</Text>
+          </TouchableOpacity>
 
-        {showMusic && (
-          <View style={styles.albumBlock}>
-            <Image
-              source={require("../assets/aoikoi.jpg")}
-              style={styles.albumCover}
-            />
+          {showMusic && (
+            <View style={styles.albumBlock}>
+              <Image
+                source={require("../assets/aoikoi.jpg")}
+                style={styles.albumCover}
+              />
 
-            <Text style={[styles.cardText, { marginTop: 10 }]}>
-              Aoi, Koi, Daiidaro No Hi — Mass of Fermenting Dregs
-            </Text>
+              <Text style={[styles.cardText, { marginTop: 10 }]}>
+                Aoi, Koi, Daiidaro No Hi — Mass of Fermenting Dregs
+              </Text>
 
-            <TouchableOpacity style={styles.musicButton} onPress={handlePlayPause}>
-              {isPlaying ? (
-                <MaterialIcons name="pause-circle-filled" size={32} color="#4d2847" />
-              ) : (
-                <MaterialIcons name="play-circle-filled" size={32} color="#4d2847" />
-              )}
-            </TouchableOpacity>
-          </View>
-        )}
-      </View>
+              <TouchableOpacity style={styles.musicButton} onPress={handlePlayPause}>
+                {isPlaying ? (
+                  <MaterialIcons name="pause-circle-filled" size={32} color="#4d2847" />
+                ) : (
+                  <MaterialIcons name="play-circle-filled" size={32} color="#4d2847" />
+                )}
+              </TouchableOpacity>
+            </View>
+          )}
+        </View>
 
-    </ScrollView>
+      </ScrollView>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#4d2847",
   },
 
-  /* HEADER */
   header: {
     alignItems: "center",
     padding: 24,
@@ -161,7 +167,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
 
-  /* FOTO */
   photoWrapper: {
     alignItems: "center",
     marginTop: 10,
@@ -186,7 +191,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 
-  /* SESSÕES */
   section: {
     padding: 20,
     backgroundColor: "#ffe6f9",
@@ -196,7 +200,6 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
 
-  /* BOTÕES */
   cardButton: {
     backgroundColor: "#ffb0f8",
     padding: 14,
@@ -209,7 +212,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 
-  /* CONTEÚDO EXPANDIDO */
   cardContent: {
     marginTop: 12,
     backgroundColor: "#fff",
@@ -223,7 +225,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
 
-  /* MÚSICA */
   albumBlock: {
     marginTop: 12,
     backgroundColor: "#fff",
@@ -247,12 +248,4 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-
-  musicButtonText: {
-    color: "#4d2847",
-    fontSize: 18,
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-
 });
